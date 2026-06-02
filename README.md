@@ -4,7 +4,7 @@ This project implements a finite-state automaton that models the behavior of an 
  # Enlace a la presentacion:
  https://youtu.be/UqX7q3fX7ZE
 
- #Definiciones formales
+ # Definiciones formales
  Autómata del Cajero (Matm​)
 
 El cajero es el elemento de borde que interactúa con el usuario y reacciona a las respuestas del banco.
