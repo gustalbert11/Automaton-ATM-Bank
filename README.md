@@ -21,22 +21,24 @@ Alfabeto de Salida (Mensajes a pantalla y peticiones al banco):
 Estado Inicial:
 q0​=q0​
 
-Funciones de Transición (δatm​) y Salida (λatm​):
-Estado Actual (q)	Entrada (σ)	Siguiente Estado (δatm​)	Salida (λatm​)
-q0​	               tarjeta_in	   q1​	                        pida_pin
-q1​	               datos_in	     q2​	                        validando
-q2​	               clave_ok     	q3​	                        mostrar_menu
-q2​	               clave_no     	q0​	                        error_expulsar
-q3​	               us_retiro    	q6​	                       pedir_monto
-q3​               	us_consulta  	q4​	                     pedir_saldo
-q3​	               cancelar	     q0​	                        ticket_gracias
-q4​	               saldo_ok	      q5​                        	mostrar_saldo
-q5​	               timeout_volver	q3​	                      mostrar_menu
-q6​	               monto_in	      q7​	                        verificar_fondos
-q7​	               fondos_ok	     q8​	                        procesar_retiro
-q7​	               fondos_no	     q3​	                       msj_sin_fondos
-q8​	               banco_ok	      q9​	                        dar_dinero
-q9​	               cierre_aut	    q0​	                      ticket_gracias
+### 1. Tabla de Transiciones - Autómata del Cajero (ATM)
+
+| Estado Actual (q) | Entrada (σ) | Siguiente Estado (δ) | Salida (λ) |
+| :--- | :--- | :--- | :--- |
+| q0 | tarjeta_in | q1 | pida_pin |
+| q1 | datos_in | q2 | validando |
+| q2 | clave_ok | q3 | mostrar_menu |
+| q2 | clave_no | q0 | error_expulsar |
+| q3 | us_retiro | q6 | pedir_monto |
+| q3 | us_consulta | q4 | pedir_saldo |
+| q3 | cancelar | q0 | ticket_gracias |
+| q4 | saldo_ok | q5 | mostrar_saldo |
+| q5 | timeout_volver | q3 | mostrar_menu |
+| q6 | monto_in | q7 | verificar_fondos |
+| q7 | fondos_ok | q8 | procesar_retiro |
+| q7 | fondos_no | q3 | msj_sin_fondos |
+| q8 | banco_ok | q9 | dar_dinero |
+| q9 | cierre_aut | q0 | ticket_gracias |
 
 Autómata del Banco (Mbank​)
 
@@ -54,16 +56,18 @@ Alfabeto de Salida (Mensajes de vuelta al cajero y comandos a la BD):
 Estado Inicial:
 q0​=p0​
 
-Funciones de Transición (δbank​) y Salida (λbank​):
-Estado Actual (p)	Entrada (σ)	Siguiente Estado (δbank​)	Salida (λbank​)
-p0​	               validando	          p1​              	check_bd_pin
-p1​	               db_clave_ok	        p2​	              clave_ok
-p1​	               db_clave_no	        p0​	              clave_no
-p2​	               pedir_saldo	        p3​	              leer_bd_saldo
-p2​	               verificar_fondos	   p4​	              check_bd_monto
-p2​	               timeout_inactividad	p0​	              cerrar_sesion
-p3​                bd_leido	           p2​	              saldo_ok
-p4                db_fondos_ok	       p4​	              fondos_ok
-p4​                db_fondos_no	       p2​	              fondos_no
-p4​                procesar_retiro	    p5​	              update_bd
-p5​	               db_update_ok	       p2​	              banco_ok
+### 2. Tabla de Transiciones - Autómata del Banco
+
+| Estado Actual (p) | Entrada (σ) | Siguiente Estado (δ) | Salida (λ) |
+| :--- | :--- | :--- | :--- |
+| p0 | validando | p1 | check_bd_pin |
+| p1 | db_clave_ok | p2 | clave_ok |
+| p1 | db_clave_no | p0 | clave_no |
+| p2 | pedir_saldo | p3 | leer_bd_saldo |
+| p2 | verificar_fondos | p4 | check_bd_monto |
+| p2 | timeout_inactividad | p0 | cerrar_sesion |
+| p3 | bd_leido | p2 | saldo_ok |
+| p4 | db_fondos_ok | p4 | fondos_ok |
+| p4 | db_fondos_no | p2 | fondos_no |
+| p4 | procesar_retiro | p5 | update_bd |
+| p5 | db_update_ok | p2 | banco_ok |
